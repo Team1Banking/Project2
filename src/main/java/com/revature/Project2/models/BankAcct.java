@@ -1,6 +1,7 @@
 package com.revature.Project2.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="BankAcct")
@@ -19,15 +20,20 @@ public class BankAcct {
     @ManyToOne
     private Users user;
 
+    @OneToMany
+    private List<Transactions> transactions;
+
+
     public BankAcct(){
 
     }
 
-    public BankAcct(int acctId, int acctType, int accoutValue, Users user) {
+    public BankAcct(int acctId, int acctType, int accoutValue, Users user, List<Transactions> transactions) {
         this.acctId = acctId;
         this.acctType = acctType;
         this.accoutValue = accoutValue;
         this.user = user;
+        this.transactions = transactions;
     }
 
     public int getAcctId() {
@@ -54,12 +60,21 @@ public class BankAcct {
         this.accoutValue = accoutValue;
     }
 
+
     public Users getUser() {
         return user;
     }
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public List<Transactions> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transactions> transactions) {
+        this.transactions = transactions;
     }
 
     @Override

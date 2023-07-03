@@ -1,5 +1,7 @@
 package com.revature.Project2.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 
 @Entity
@@ -24,22 +26,23 @@ public class Users {
     @ManyToOne
     private Roles roles;
 
-//    @OneToMany
-//    private BankAcct bankAcct;
+    @OneToOne
+    private UserInfo userInfo;
 
     public Users(){
 
     }
 
-    public Users(int user_id, String firstName, String lastName, String userName, String password, Roles roles) {
+    public Users(int user_id, String firstName, String lastName, String userName, String password, Roles roles, UserInfo userInfo) {
         this.user_id = user_id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
         this.roles = roles;
-//        this.bankAcct = bankAcct;
+        this.userInfo = userInfo;
     }
+
 
     public int getUser_id() {
         return user_id;
@@ -89,13 +92,6 @@ public class Users {
         this.roles = roles;
     }
 
-//    public BankAcct getBankAcct() {
-//        return bankAcct;
-//    }
-//
-//    public void setBankAcct(BankAcct bankAcct) {
-//        this.bankAcct = bankAcct;
-//    }
 
     @Override
     public String toString() {
