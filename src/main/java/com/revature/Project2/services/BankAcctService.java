@@ -32,6 +32,32 @@ public class BankAcctService {
             return bankAcctDAO.save(ba)  ;
     }
 
+    public BankAcct increaseAccountAmount(int bAccountId, int amt) {
+       BankAcct ba = bankAcctDAO.getById(bAccountId);
+
+       ba.setAccoutValue(ba.getAccoutValue() + amt);
+
+       return bankAcctDAO.save(ba);
+    }
+
+    public BankAcct decreaseAccountAmount(int bAccountId, int amt) {
+        BankAcct ba = bankAcctDAO.getById(bAccountId);
+
+        int currentAmount = ba.getAccoutValue();
+
+        if(currentAmount >= amt){
+            ba.setAccoutValue(currentAmount - amt);
+            return bankAcctDAO.save(ba);
+        }
+        else{
+            System.out.println("Not enough funds. Failure to withdraw requested amount");
+            return null;
+        }
+
+
+    }
+
+
 
 
 

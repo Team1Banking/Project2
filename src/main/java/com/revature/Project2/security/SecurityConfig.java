@@ -43,6 +43,7 @@ public class SecurityConfig {
 
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/account/{id}/**").hasAuthority("Account Holder")
+                .antMatchers(HttpMethod.PUT, "/Deposit/**").hasAuthority("Account Holder")
 
 
                 .and()

@@ -19,13 +19,28 @@ public class BankAcctController {
 
     @PostMapping("{id}/register")
     public BankAcct createAccountByUserIdHandler(
-            @PathVariable("id") int id,
+            @PathVariable("id") int bAccountId,
             @RequestBody BankAcct ba)
     {
 
-        return bankAcctService.createAccountByUserId(id,ba);
+        return bankAcctService.createAccountByUserId(bAccountId,ba);
 
+    }
 
+    @PutMapping("Deposit/{id}")
+    public BankAcct increaseAccountAmountHandler(
+            @PathVariable("id") int bAccountId,
+            @RequestBody int amt
+    ){
+        return bankAcctService.increaseAccountAmount(bAccountId,amt);
+    }
+
+    @PutMapping("Withdraw/{id}")
+    public BankAcct decreaseAccountAmountHandler(
+            @PathVariable("id") int bAccountId,
+            @RequestBody int amt
+    ){
+        return bankAcctService.decreaseAccountAmount(bAccountId,amt);
     }
 
 
