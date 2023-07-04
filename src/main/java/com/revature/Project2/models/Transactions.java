@@ -27,6 +27,4 @@ public class Transactions {
     private int dateTime;
 
 
-
-
 }

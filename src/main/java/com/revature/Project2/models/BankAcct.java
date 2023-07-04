@@ -2,6 +2,7 @@ package com.revature.Project2.models;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name="BankAcct")
@@ -12,7 +13,7 @@ public class BankAcct {
     private int acctId;
 
     @Column(nullable = false)
-    private int acctType;
+    private String acctType;
 
     @Column(nullable = false)
     private int accoutValue;
@@ -23,18 +24,31 @@ public class BankAcct {
     @OneToMany
     private List<Transactions> transactions;
 
-
     public BankAcct(){
 
     }
 
-    public BankAcct(int acctId, int acctType, int accoutValue, Users user, List<Transactions> transactions) {
+    public BankAcct(String acctType, int accoutValue, Users user) {
+        this.acctType = acctType;
+        this.accoutValue = accoutValue;
+        this.user = user;
+    }
+
+    public BankAcct(String acctType, int accoutValue, Users user, List<Transactions> transactions) {
+        this.acctType = acctType;
+        this.accoutValue = accoutValue;
+        this.user = user;
+        this.transactions = transactions;
+    }
+
+    public BankAcct(int acctId, String acctType, int accoutValue, Users user, List<Transactions> transactions) {
         this.acctId = acctId;
         this.acctType = acctType;
         this.accoutValue = accoutValue;
         this.user = user;
         this.transactions = transactions;
     }
+
 
     public int getAcctId() {
         return acctId;
@@ -44,11 +58,11 @@ public class BankAcct {
         this.acctId = acctId;
     }
 
-    public int getAcctType() {
+    public String getAcctType() {
         return acctType;
     }
 
-    public void setAcctType(int acctType) {
+    public void setAcctType(String acctType) {
         this.acctType = acctType;
     }
 
