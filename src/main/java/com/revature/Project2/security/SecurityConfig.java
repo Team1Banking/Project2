@@ -3,6 +3,7 @@ package com.revature.Project2.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +42,9 @@ public class SecurityConfig {
                 .authorizeRequests()
 
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/account/{id}/**").hasAuthority("Account Holder")
+                .antMatchers(HttpMethod.PUT, "/Deposit/**").hasAuthority("Account Holder")
+
 
                 .and()
                 .httpBasic();
@@ -50,7 +54,6 @@ public class SecurityConfig {
         return http.build();
 
     }
-
 
 
     @Bean
