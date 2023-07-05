@@ -43,7 +43,12 @@ public class BankAcctController {
         return bankAcctService.decreaseAccountAmount(bAccountId,amt);
     }
 
-
+//    @PutMapping("Transfer/{id}")
+//    public BankAcct transferBetweenAccountHanlder(
+//            @PathVariable ("id") int bAccountId,
+//            @RequestBody
+//    )
+//
 
 
 
