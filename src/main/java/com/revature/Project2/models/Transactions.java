@@ -45,6 +45,12 @@ public class Transactions {
         this.time = time;
     }
 
+    public Transactions(int amount, int recepientAcct, int senderAcct) {
+        this.amount = amount;
+        this.recepientAcct = recepientAcct;
+        this.senderAcct = senderAcct;
+    }
+
     public Transactions(int transactionId, int amount, int recepientAcct, int senderAcct, String transactionType, LocalDate date, LocalTime time) {
         this.transactionId = transactionId;
         this.amount = amount;

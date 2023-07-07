@@ -15,12 +15,8 @@ import java.util.List;
 
 @Service
 public class BankAcctService {
-    //TODO GET a list of all bank accounts pertaining to a user
-
     private final UserDAO userDAO;
     private final BankAcctDAO bankAcctDAO;
-
-
     private final TransactionService transactionService;
 
     @Autowired
@@ -32,9 +28,14 @@ public class BankAcctService {
         this.transactionService = transactionService;
     }
 
-    public BankAcct createAccountByUserId(int id, BankAcct ba) {
-            userDAO.findById(id);
-            Users u = userDAO.getById(id);
+    public List<BankAcct> getAllAccountsByUserId(int userId){
+//        System.out.println("Bank Service");
+//        System.out.println(bankAcctDAO.findAllBankAcctByUserId(userId));
+        return bankAcctDAO.findAllBankAcctByUserId(userId);
+    }
+    public BankAcct createAccountByUserId(int userId, BankAcct ba) {
+            userDAO.findById(userId);
+            Users u = userDAO.getById(userId);
 
             ba.setUser(u);
             ba.setAccoutValue(0);
@@ -42,59 +43,33 @@ public class BankAcctService {
             return bankAcctDAO.save(ba)  ;
     }
 
-    public BankAcct increaseAccountAmount(int bAccountId, int amt) {
-       BankAcct ba = bankAcctDAO.getById(bAccountId);
-       ba.setAccoutValue(ba.getAccoutValue() + amt);
+    public BankAcct increaseAccountAmount(int bAccountId, int amt, String transAType) {
+        BankAcct ba = bankAcctDAO.getById(bAccountId);
+        ba.setAccoutValue(ba.getAccoutValue() + amt);
 
-       Transactions t = new Transactions();
-       LocalDate date = LocalDate.now();
-       LocalTime time = LocalTime.now();
-       System.out.println("DateTime:  " + date);
-
-       t.setTransactionType("Deposit");
-       t.setAmount(amt);
-       t.setRecepientAcct(bAccountId);
-       t.setSenderAcct(111);
-       t.setDate(date);
-       t.setTime(time);
-
-       System.out.println(t);
-       transactionService.createTransaction(t);
+        int sender1 = 1111; //1111 means direct-deposit
+        Transactions t = transactionService.createTransaction(amt, sender1, bAccountId, transAType);
 
         List<Transactions> tList = ba.getTransactions();
-        System.out.println("1"+tList);
         tList.add(t);
-        System.out.println("2"+tList);
         ba.setTransactions(tList);
-
 
        return bankAcctDAO.save(ba);
     }
 
-    public BankAcct decreaseAccountAmount(int bAccountId, int amt) {
+    public BankAcct decreaseAccountAmount(int bAccountId, int amt, String transAType) {
         BankAcct ba = bankAcctDAO.getById(bAccountId);
         int currentAmount = ba.getAccoutValue();
 
         if(currentAmount >= amt){
             ba.setAccoutValue(currentAmount - amt);
-            Transactions t = new Transactions();
 
-            LocalDate date = LocalDate.now();
-            LocalTime time = LocalTime.now();
-
-            t.setTransactionType("Withdrawal");
-            t.setAmount(-(amt));
-            t.setRecepientAcct(111);
-            t.setSenderAcct(bAccountId);
-            t.setDate(date);
-            t.setTime(time);
-
-            transactionService.createTransaction(t);
+            int recevier1 = 2222; //2222 means atm withdrawal
+            Transactions t = transactionService.createTransaction(amt, bAccountId,recevier1,transAType);
 
             List<Transactions> tList = ba.getTransactions();
             tList.add(t);
             ba.setTransactions(tList);
-
 
             return bankAcctDAO.save(ba);
         }
@@ -102,16 +77,37 @@ public class BankAcctService {
             System.out.println("Not enough funds. Failure to withdraw requested amount");
             return null;
         }
+    }
+    
+    public BankAcct transferBetweenAccounts(Transactions transaction) {
+
+        int bAccountId1 = transaction.getSenderAcct();
+        int bAccountId2 = transaction.getRecepientAcct();
+        int amt = transaction.getAmount();
+
+        BankAcct ba1 = bankAcctDAO.getById(bAccountId1);
+        int currentAmount1 = ba1.getAccoutValue();
+        BankAcct ba2 = bankAcctDAO.getById(bAccountId2);
+        int currentAmount2 = ba2.getAccoutValue();
+
+        if(currentAmount1 >= amt){
+            ba1.setAccoutValue(currentAmount1 - amt);
+            ba2.setAccoutValue(currentAmount2 + amt);
+
+            Transactions t = transactionService.createTransaction(amt,bAccountId1,bAccountId2,"Transfer");
+
+            List<Transactions> tList = ba1.getTransactions();
+            tList.add(t);
+            ba1.setTransactions(tList);
+
+            return bankAcctDAO.save(ba1);
+        }
+        else{
+            System.out.println("Not enough funds to make the requested transfer");
+            return null;
+        }
 
     }
-
-
-
-
-
-
-
-
 
 
 
