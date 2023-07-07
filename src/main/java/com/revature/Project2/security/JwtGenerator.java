@@ -18,32 +18,34 @@ import java.util.Date;
 
 @Component
 public class JwtGenerator {
-
     private SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
     @Autowired
     private UserService userService;
 
-    public String generateToken(Authentication authentication){
-
+    public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + (1000 *60 *60*24));
+        Date expireDate = new Date(currentDate.getTime() + (1000 * 60 * 60 * 24));
 
         Users user = userService.getUserByUsername(username);
 
-        String token = Jwts.builder()
-                .setSubject(username)
-                .claim("Id", user.getUser_id())
-                .claim("Role",user.getRoles().getRoleTitle())
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("Id", user.getUser_id());
+        claims.put("Role", user.getRoles().getRoleTitle());
+        claims.put("firstName", user.getFirstName());
+        claims.put("lastName", user.getLastName());
 
+        String token = Jwts.builder()
+                .setClaims(claims)
                 .setIssuedAt(currentDate)
                 .setExpiration(expireDate)
-                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .signWith(secretKey)
                 .compact();
 
         return token;
     }
+
 
 
     public boolean validateToken(String token){
