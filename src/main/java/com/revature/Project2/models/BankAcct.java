@@ -28,6 +28,13 @@ public class BankAcct {
 
     }
 
+    public BankAcct(int acctId, String acctType, int accoutValue, Users user) {
+        this.acctId = acctId;
+        this.acctType = acctType;
+        this.accoutValue = accoutValue;
+        this.user = user;
+    }
+
     public BankAcct(String acctType, int accoutValue, Users user) {
         this.acctType = acctType;
         this.accoutValue = accoutValue;
