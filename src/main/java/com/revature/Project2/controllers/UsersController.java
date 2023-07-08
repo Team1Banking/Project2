@@ -1,6 +1,7 @@
 package com.revature.Project2.controllers;
 
 import com.revature.Project2.models.BankAcct;
+import com.revature.Project2.models.Transactions;
 import com.revature.Project2.services.BankAcctService;
 import com.revature.Project2.services.TransactionService;
 import com.revature.Project2.services.UserService;
@@ -34,10 +35,10 @@ public class UsersController {
         return  bankAcctService.getAllAccountsByUserId(userId);
     }
 
-//    @GetMapping("{id}/Transactions")
-//    public List<Transactions> getAllUserTransactionsHandler(@PathVariable("id") int id){
-//        return transactionService.getUserTransactions(id);
-//    }
-//
+    @GetMapping("{id}/All/Transactions")
+    public List<Transactions> getAllUserTransactionsHandler(@PathVariable("id") int userId){
+        return transactionService.getAllUserTransactions(userId);
+    }
+
 
 }
