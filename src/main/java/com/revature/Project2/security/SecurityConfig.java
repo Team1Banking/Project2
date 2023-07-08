@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.PUT, "/account/Deposit/**").hasAuthority("Account Holder")
                 .antMatchers(HttpMethod.PUT, "/account/Withdraw/**").hasAuthority("Account Holder")
                 .antMatchers(HttpMethod.PUT, "/account/Transfer").hasAuthority("Account Holder")
-                .antMatchers(HttpMethod.PUT, "/user/**").hasAuthority("Account Holder")
+                .antMatchers(HttpMethod.GET, "/user/**").hasAuthority("Account Holder")
 
                 .and()
                 .httpBasic();
