@@ -8,11 +8,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TransactionDAO extends JpaRepository<Transactions,Integer> {
-//    @Query(
-//            value ="SELECT * FROM ban WHERE recepient_acct = :bankAcctId OR sender_acct = :bankAcctId",
-//            nativeQuery = true
-//    )
-//    List<Transactions> findAllTransactionsByBankAcctId(@Param("bankAcctId") int bankAcctId);
+    @Query(
+            value ="SELECT * FROM transactions WHERE recepient_acct = :bankAcctId OR sender_acct = :bankAcctId",
+            nativeQuery = true
+    )
+    List<Transactions> findAllTransactionsByBankAcctId(@Param("bankAcctId") int bankAcctId);
+
 
 
 }
