@@ -13,5 +13,16 @@ public interface TransactionDAO extends JpaRepository<Transactions,Integer> {
             nativeQuery = true
     )
     List<Transactions> findAllTransactionsByBankAcctId(@Param("bankAcctId") int bankAcctId);
+ @Query(
+            value ="SELECT * FROM transactions WHERE recepient_acct = :bankAcctId",
+            nativeQuery = true
+    )
+    List<Transactions> findAllIncomeByBankAcctId(@Param("bankAcctId") int bankAcctId);
+
+ @Query(
+            value ="SELECT * FROM transactions WHERE sender_acct = :bankAcctId",
+            nativeQuery = true
+    )
+    List<Transactions> findAllExpensesByBankAcctId(@Param("bankAcctId") int bankAcctId);
 
 }
