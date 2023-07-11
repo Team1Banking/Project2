@@ -79,15 +79,12 @@ public class TransactionService {
     }
 
 
+    public List<Transactions> getAllBankAccountTransactions(int bankAccountId) {
+//        BankAcct ba = bankAcctDAO.getById(bankAccountId);
+//        List<Transactions> t = transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
 
 
 
-
-
-
-
-
-
-
-
+        return transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
+    }
 }
