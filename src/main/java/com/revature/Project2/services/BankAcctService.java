@@ -33,6 +33,16 @@ public class BankAcctService {
 //        System.out.println(bankAcctDAO.findAllBankAcctByUserId(userId));
         return bankAcctDAO.findAllBankAcctByUserId(userId);
     }
+
+    public List<BankAcct> getAllAccountsByUserName(String userName){
+        Users u = userDAO.findByUserName(userName);
+        int userId = u.getUser_id();
+//        System.out.println("Bank Service");
+//        System.out.println(bankAcctDAO.findAllBankAcctByUserId(userId));
+        return bankAcctDAO.findAllBankAcctByUserId(userId);
+    }
+
+
     public BankAcct createAccountByUserId(int userId, BankAcct ba) {
             userDAO.findById(userId);
             Users u = userDAO.getById(userId);

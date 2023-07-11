@@ -16,4 +16,5 @@ public interface BankAcctDAO extends JpaRepository<BankAcct,Integer> {
     List<BankAcct> findAllBankAcctByUserId(@Param("userId") int userId);
 
 
+
 }
