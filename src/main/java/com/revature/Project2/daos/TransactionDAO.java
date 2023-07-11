@@ -14,6 +14,4 @@ public interface TransactionDAO extends JpaRepository<Transactions,Integer> {
     )
     List<Transactions> findAllTransactionsByBankAcctId(@Param("bankAcctId") int bankAcctId);
 
-
-
 }
