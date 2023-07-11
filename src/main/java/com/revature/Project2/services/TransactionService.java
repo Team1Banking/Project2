@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TransactionService {
@@ -20,14 +19,12 @@ public class TransactionService {
     private final BankAcctDAO bankAcctDAO;
     private final TransactionDAO transactionDAO;
 
-
     @Autowired
     public TransactionService(UserDAO userDAO, BankAcctDAO bankAcctDAO, TransactionDAO transactionDAO) {
         this.userDAO = userDAO;
         this.bankAcctDAO = bankAcctDAO;
         this.transactionDAO = transactionDAO;
     }
-
 
     public Transactions createTransaction(int amt, int sender, int receiver, String type){
         Transactions t = new Transactions();
@@ -45,8 +42,6 @@ public class TransactionService {
 
         return t;
     }
-
-
 
     public List<Transactions> getAllUserTransactions(int userId){
 
@@ -71,7 +66,14 @@ public class TransactionService {
             }
         }
 
-//        System.out.println("TransactionsList");
+//        Sorting the transactions list by Id number
+        Collections.sort(transactionsList, new Comparator<Transactions>(){
+            public int compare(Transactions t1, Transactions t2){
+                return t2.getTransactionId() -t1.getTransactionId();
+            }
+        });
+
+//        System.out.println("TransactionNumbers");
 //        System.out.println(transactionsList);
 
         //send transactions made by each accounts
@@ -82,8 +84,6 @@ public class TransactionService {
     public List<Transactions> getAllBankAccountTransactions(int bankAccountId) {
 //        BankAcct ba = bankAcctDAO.getById(bankAccountId);
 //        List<Transactions> t = transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
-
-
 
         return transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
     }
