@@ -72,10 +72,8 @@ public class TransactionService {
                 return t2.getTransactionId() -t1.getTransactionId();
             }
         });
-
 //        System.out.println("TransactionNumbers");
 //        System.out.println(transactionsList);
-
         //send transactions made by each accounts
         return transactionsList;
     }
@@ -84,7 +82,35 @@ public class TransactionService {
     public List<Transactions> getAllBankAccountTransactions(int bankAccountId) {
 //        BankAcct ba = bankAcctDAO.getById(bankAccountId);
 //        List<Transactions> t = transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
-
         return transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
+    }
+
+    public List<Transactions> getAllBankAccountIncome(int bankAccountId) {
+//        List<Transactions> allList = transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
+//        List<Transactions> incomeList = new ArrayList<>();
+//
+//        for(Transactions t: allList){
+//             if (t.getRecepientAcct() == bankAccountId){
+//                 incomeList.add(t);
+//             }
+//
+//        }
+//        return incomeList;
+        return transactionDAO.findAllIncomeByBankAcctId(bankAccountId);
+    }
+
+    public List<Transactions> getAllBankAccountExpenses(int bankAccountId) {
+//        List<Transactions> allList = transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
+//        List<Transactions> expensesList = new ArrayList<>();
+//
+//        for(Transactions t: allList){
+//             if (t.getSenderAcct() == bankAccountId){
+//                 expensesList.add(t);
+//             }
+//
+//        }
+//        return expensesList;
+
+        return  transactionDAO.findAllExpensesByBankAcctId(bankAccountId);
     }
 }

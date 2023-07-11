@@ -61,8 +61,15 @@ public class BankAcctController {
         return transactionService.getAllBankAccountTransactions(bankAccountId);
     }
 
+    @GetMapping("{id}/All/Transactions/Income")
+    public List<Transactions> getAllBankAccountIncomeHandler(@PathVariable("id") int bankAccountId){
+        return transactionService.getAllBankAccountIncome(bankAccountId);
+    }
 
-
+    @GetMapping("{id}/All/Transactions/Expenses")
+    public List<Transactions> getAllBankAccountExpensesHandler(@PathVariable("id") int bankAccountId){
+        return transactionService.getAllBankAccountExpenses(bankAccountId);
+    }
 
 
 }
