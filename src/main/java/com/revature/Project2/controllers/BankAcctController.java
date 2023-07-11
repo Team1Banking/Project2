@@ -7,6 +7,8 @@ import com.revature.Project2.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("account")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -52,6 +54,11 @@ public class BankAcctController {
     public BankAcct transferBetweenAccountHanlder(@RequestBody Transactions t)
     {
         return bankAcctService.transferBetweenAccounts(t);
+    }
+
+    @GetMapping("{id}/All/Transactions")
+    public List<Transactions> getAllBankAccountTransactionsHandler(@PathVariable("id") int bankAccountId){
+        return transactionService.getAllBankAccountTransactions(bankAccountId);
     }
 
 
