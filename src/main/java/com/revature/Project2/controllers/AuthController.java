@@ -74,4 +74,44 @@ public class AuthController {
 
     }
 
+    @GetMapping("{id}/accountInfo")
+    public Users getUserAccountInfo(@PathVariable ("id") int userId){
+
+        Users u= userDAO.getReferenceById(userId);
+        Users uAcctInfo = new Users();
+
+        uAcctInfo.setFirstName(u.getFirstName());
+        uAcctInfo.setLastName(u.getLastName());
+        uAcctInfo.setUserName(u.getUserName());
+        uAcctInfo.setPassword(u.getPassword());
+
+        return uAcctInfo;
+    }
+
+    @PutMapping("{id}/accountInfo")
+    public Users updateUserAccountInfo(
+            @PathVariable ("id") int userId,
+            @RequestBody RegisterDTO userAccountInfo
+    ){
+
+        Users u= userDAO.getReferenceById(userId);
+
+        if(userAccountInfo.getFirstName() != null){
+            u.setFirstName(userAccountInfo.getFirstName());
+        }
+        if(userAccountInfo.getLastName() != null) {
+            u.setLastName(userAccountInfo.getLastName());
+        }
+        if(userAccountInfo.getUsername() != null) {
+            u.setUserName(userAccountInfo.getUsername());
+        }
+        if(userAccountInfo.getPassword() != null) {
+            u.setPassword(passwordEncoder.encode(userAccountInfo.getPassword()));
+        }
+
+
+        return  userDAO.save(u);
+    }
+
+
 }

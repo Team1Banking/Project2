@@ -20,14 +20,5 @@ public interface UserDAO extends JpaRepository<Users, Integer>{
 
 //    List<Transactions> findByUserId(int userId);
 
-//    @Query(value ="SELECT * FROM bank_acct WHERE user_user_id = :userId", nativeQuery = true)
-//    List<BankAcct> findAllBankAcctByUserId(@Param("userId") int userId);
-
-
-//    @Query(
-//        value ="SELECT * FROM bank_acct WHERE user_user_id = :userId",
-//        nativeQuery = true
-//    )
-//    List<BankAcct> findAllBankAcctByUserId(@Param("userId") int userId);
 
 }
