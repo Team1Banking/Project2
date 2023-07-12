@@ -1,5 +1,6 @@
 package com.revature.Project2.controllers;
 
+import com.revature.Project2.Project2Application;
 import com.revature.Project2.daos.RolesDAO;
 import com.revature.Project2.daos.UserDAO;
 import com.revature.Project2.dtos.AuthResponseDTO;
@@ -7,6 +8,8 @@ import com.revature.Project2.dtos.LoginDTO;
 import com.revature.Project2.dtos.RegisterDTO;
 import com.revature.Project2.models.Users;
 import com.revature.Project2.security.JwtGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,9 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final JwtGenerator jwtGenerator;
 
+    private static final Logger logger = LoggerFactory.getLogger(Project2Application.class);
+
+
     @Autowired
     public AuthController(UserDAO userDAO, RolesDAO rolesDAO, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtGenerator jwtGenerator) {
         this.userDAO = userDAO;
@@ -41,7 +47,8 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
 
         if(userDAO.existsByUserName(registerDTO.getUsername())){
-            return new ResponseEntity<String>("Username already eists", HttpStatus.BAD_REQUEST);
+            logger.warn("Username already exists");
+            return new ResponseEntity<String>("Username already exists", HttpStatus.BAD_REQUEST);
         }
 
         Users user = new Users();
@@ -53,6 +60,8 @@ public class AuthController {
 
         userDAO.save(user);
 
+
+        logger.info("Successful registration of username: " + user.getUserName());
         return new ResponseEntity<>("User successfully registered", HttpStatus.CREATED);
     }
 

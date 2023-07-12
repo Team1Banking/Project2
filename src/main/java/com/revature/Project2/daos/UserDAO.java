@@ -18,6 +18,7 @@ public interface UserDAO extends JpaRepository<Users, Integer>{
 
     Users findByUserName(String username);
 
+
 //    List<Transactions> findByUserId(int userId);
 
 
