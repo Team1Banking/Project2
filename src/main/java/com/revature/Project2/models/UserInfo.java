@@ -7,6 +7,10 @@ import javax.persistence.*;
 public class UserInfo {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int userInfoId;
+//
+//    @Column(unique = true)
     private int phoneNumber;
 
     @Column(unique = true)
@@ -20,12 +24,28 @@ public class UserInfo {
 
     }
 
+//    public UserInfo(int userInfoId, int phoneNumber, String email, String homeAddress, String mailingAddress) {
+//        this.userInfoId = userInfoId;
+//        this.phoneNumber = phoneNumber;
+//        this.email = email;
+//        this.homeAddress = homeAddress;
+//        this.mailingAddress = mailingAddress;
+//    }
+
     public UserInfo(int phoneNumber, String email, String homeAddress, String mailingAddress) {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.homeAddress = homeAddress;
         this.mailingAddress = mailingAddress;
     }
+
+//    public int getUserInfoId() {
+//        return userInfoId;
+//    }
+//
+//    public void setUserInfoId(int userInfoId) {
+//        this.userInfoId = userInfoId;
+//    }
 
     public int getPhoneNumber() {
         return phoneNumber;

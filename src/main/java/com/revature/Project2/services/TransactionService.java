@@ -1,10 +1,13 @@
 package com.revature.Project2.services;
 
+import com.revature.Project2.Project2Application;
 import com.revature.Project2.daos.BankAcctDAO;
 import com.revature.Project2.daos.TransactionDAO;
 import com.revature.Project2.daos.UserDAO;
 import com.revature.Project2.models.BankAcct;
 import com.revature.Project2.models.Transactions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,8 @@ public class TransactionService {
     private final UserDAO userDAO;
     private final BankAcctDAO bankAcctDAO;
     private final TransactionDAO transactionDAO;
+    private static final Logger logger = LoggerFactory.getLogger(Project2Application.class);
+
 
     @Autowired
     public TransactionService(UserDAO userDAO, BankAcctDAO bankAcctDAO, TransactionDAO transactionDAO) {
@@ -45,44 +50,57 @@ public class TransactionService {
 
     public List<Transactions> getAllUserTransactions(int userId){
 
-        //get accounts by the userId and retrieve all their bank accounts
-        List<BankAcct> acctList = bankAcctDAO.findAllBankAcctByUserId(userId);
-//        System.out.println("AccountList");
-//        System.out.println(acctList);
-        List <Integer> bankAccountNumList = new ArrayList<>();
-        for(BankAcct b : acctList){
-            int acctId = b.getAcctId();
-            bankAccountNumList.add(acctId);
-        }
-//        System.out.println("BankAcountNumberLists");
-//        System.out.println(bankAccountNumList);
+        if(userDAO.existsById(userId)) {
+
+            //get accounts by the userId and retrieve all their bank accounts
+            List<BankAcct> acctList = bankAcctDAO.findAllBankAcctByUserId(userId);
+
+            List<Integer> bankAccountNumList = new ArrayList<>();
+            for (BankAcct b : acctList) {
+                int acctId = b.getAcctId();
+                bankAccountNumList.add(acctId);
+            }
 
 //        take bank accounts and get each of their transactions from them
-        List<Transactions> transactionsList =  new ArrayList<>();
-        for(Integer bNum : bankAccountNumList){
-            List<Transactions> t = transactionDAO.findAllTransactionsByBankAcctId(bNum);
-            for(Transactions trans: t){
-                transactionsList.add(trans);
+            List<Transactions> transactionsList = new ArrayList<>();
+            for (Integer bNum : bankAccountNumList) {
+                List<Transactions> t = transactionDAO.findAllTransactionsByBankAcctId(bNum);
+                for (Transactions trans : t) {
+                    transactionsList.add(trans);
+                }
             }
-        }
 
 //        Sorting the transactions list by Id number
-        Collections.sort(transactionsList, new Comparator<Transactions>(){
-            public int compare(Transactions t1, Transactions t2){
-                return t2.getTransactionId() -t1.getTransactionId();
-            }
-        });
-//        System.out.println("TransactionNumbers");
-//        System.out.println(transactionsList);
-        //send transactions made by each accounts
-        return transactionsList;
+            Collections.sort(transactionsList, new Comparator<Transactions>() {
+                public int compare(Transactions t1, Transactions t2) {
+                    return t2.getTransactionId() - t1.getTransactionId();
+                }
+            });
+
+            //send transactions made by each accounts
+
+            logger.info("Successful retrieval of transactions for user #" + userId);
+            return transactionsList;
+
+        }else{
+            logger.warn("Failure to retrieve transactions. User #" + userId + " does not exist");
+            return null;
+        }
+
     }
 
 
     public List<Transactions> getAllBankAccountTransactions(int bankAccountId) {
 //        BankAcct ba = bankAcctDAO.getById(bankAccountId);
 //        List<Transactions> t = transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
-        return transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
+        if(bankAcctDAO.existsById(bankAccountId)){
+            logger.info("Successful retrieval of transactions for Bank Account #" + bankAccountId);
+            return transactionDAO.findAllTransactionsByBankAcctId(bankAccountId);
+        }
+        else{
+            logger.warn("Failure to retrieve transactions. Bank Account #" + bankAccountId + " does not exist");
+            return null;
+        }
     }
 
     public List<Transactions> getAllBankAccountIncome(int bankAccountId) {
@@ -96,7 +114,14 @@ public class TransactionService {
 //
 //        }
 //        return incomeList;
-        return transactionDAO.findAllIncomeByBankAcctId(bankAccountId);
+        if(bankAcctDAO.existsById(bankAccountId)){
+            logger.info("Successful retrieval of income-transactions for Bank Account #" + bankAccountId);
+            return transactionDAO.findAllIncomeByBankAcctId(bankAccountId);
+        }
+        else{
+            logger.warn("Failure to retrieve income-transactions. Bank Account #" + bankAccountId + " does not exist");
+            return null;
+        }
     }
 
     public List<Transactions> getAllBankAccountExpenses(int bankAccountId) {
@@ -111,6 +136,14 @@ public class TransactionService {
 //        }
 //        return expensesList;
 
-        return  transactionDAO.findAllExpensesByBankAcctId(bankAccountId);
+        if(bankAcctDAO.existsById(bankAccountId)){
+            logger.info("Successful retrieval of expense-transactions for Bank Account #" + bankAccountId);
+            return  transactionDAO.findAllExpensesByBankAcctId(bankAccountId);
+        }
+        else{
+            logger.warn("Failure to retrieve expense-transactions. Bank Account #" + bankAccountId + " does not exist");
+            return null;
+        }
+
     }
 }
