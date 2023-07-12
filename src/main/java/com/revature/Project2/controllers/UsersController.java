@@ -1,5 +1,6 @@
 package com.revature.Project2.controllers;
 
+import com.revature.Project2.dtos.RegisterDTO;
 import com.revature.Project2.models.BankAcct;
 import com.revature.Project2.models.Transactions;
 import com.revature.Project2.models.UserInfo;
@@ -9,6 +10,7 @@ import com.revature.Project2.services.TransactionService;
 import com.revature.Project2.services.UserService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,6 +73,11 @@ public class UsersController {
     {
         return userService.updateUserInfo(userId,userInfo);
     }
+
+
+
+
+
 
 
 }

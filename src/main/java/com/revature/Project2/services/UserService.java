@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserDAO userDAO;
-
     private final UserInfoDAO userInfoDAO;
+
 
     @Autowired
     public UserService(UserDAO userDAO, UserInfoDAO userInfoDAO) {
