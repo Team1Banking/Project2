@@ -18,7 +18,6 @@ public class UserService {
 
     private final UserDAO userDAO;
     private final UserInfoDAO userInfoDAO;
-
     private static final Logger logger = LoggerFactory.getLogger(Project2Application.class);
 
 
@@ -57,7 +56,6 @@ public class UserService {
 
     }
 
-
 //    public Users createUserInfo(int userId, UserInfo userInfo) {
 //        Users u = userDAO.getById(userId);
 //        System.out.println(u.getUserInfo());
@@ -65,14 +63,18 @@ public class UserService {
 //        return userDAO.save(u);
 //    }
 
-
-
     public Users updateUserInfo(int userId, UserInfo userInfo) {
 
         if(userDAO.existsById(userId)){
             Users u= userDAO.getReferenceById(userId);
 
             int phoneId = userInfo.getPhoneNumber();
+            String phoneDigits = Integer.toString(phoneId);
+
+            if(phoneDigits.length() < 7){
+                return null;
+            }
+
             UserInfo ui = userInfo;
 
             userInfoDAO.save(userInfo);
@@ -80,7 +82,6 @@ public class UserService {
 
             logger.info("Successfully updated UserInfo for user #"+userId);
             return  userDAO.save(u);
-
 
         }else{
             logger.warn("User #"+ userId + " not found. No updated was completed");

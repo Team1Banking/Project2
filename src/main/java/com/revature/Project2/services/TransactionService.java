@@ -32,20 +32,37 @@ public class TransactionService {
     }
 
     public Transactions createTransaction(int amt, int sender, int receiver, String type){
-        Transactions t = new Transactions();
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
+       if(amt <= 0){
+           return null;
+       }
 
-        t.setTransactionType(type);
-        t.setAmount(amt);
-        t.setRecepientAcct(receiver);
-        t.setSenderAcct(sender);
-        t.setDate(date);
-        t.setTime(time);
+       if(type != "" && type!=null){
+           return null;
+       }
 
-        transactionDAO.save(t);
+       if(userDAO.existsById(sender) && userDAO.existsById(receiver)){
 
-        return t;
+           Transactions t = new Transactions();
+           LocalDate date = LocalDate.now();
+           LocalTime time = LocalTime.now();
+
+           t.setTransactionType(type);
+           t.setAmount(amt);
+           t.setRecepientAcct(receiver);
+           t.setSenderAcct(sender);
+           t.setDate(date);
+           t.setTime(time);
+
+           transactionDAO.save(t);
+
+           return t;
+
+       }
+       else{
+           return null;
+       }
+
+
     }
 
     public List<Transactions> getAllUserTransactions(int userId){

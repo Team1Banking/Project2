@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("account")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000","http://hello-react-antapp.s3-website-us-west-1.amazonaws.com"})
 public class BankAcctController {
 
     private final BankAcctService bankAcctService;

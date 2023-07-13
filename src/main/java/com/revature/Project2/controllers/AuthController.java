@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000",
+        "http://hello-react-antapp.s3-website-us-west-1.amazonaws.com"})
 public class AuthController {
     private final UserDAO userDAO;
     private final RolesDAO rolesDAO;

@@ -87,7 +87,10 @@ public class BankAcctService {
     }
 
     public BankAcct increaseAccountAmount(int bAccountId, int amt, String transAType) {
-        if( amt <1){
+        if( amt == 0){
+            return null;
+        }
+        if(amt<0){
             return null;
         }
 
@@ -113,13 +116,20 @@ public class BankAcctService {
     }
 
     public BankAcct decreaseAccountAmount(int bAccountId, int amt, String transAType) {
-        if( amt <1){
+        if( amt == 0){
+            return null;
+        }
+        if(amt<0){
             return null;
         }
 
         if(bankAcctDAO.existsById(bAccountId)) {
             BankAcct ba = bankAcctDAO.getById(bAccountId);
             int currentAmount = ba.getAccoutValue();
+
+            if(ba == null){
+                return null;
+            }
 
             if (currentAmount >= amt) {
                 ba.setAccoutValue(currentAmount - amt);
