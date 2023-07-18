@@ -32,22 +32,36 @@
 ## Installation
 Clone the repository: git clone <https://github.com/Team1Banking/Project2.git>
 
-### - Set up the back-end:
+### Set up the back-end:
 
 - Install dependencies: cd backend && mvn install
 - Configure the database connection in application.properties.
 - Run the back-end: mvn spring-boot:run
 
-### - Set up the front-end:
+### Set up the front-end:
 - Install dependencies: cd frontend && npm install
 - Configure the API endpoint in src/api/config.js.
 - Run the front-end: npm start
 
-### - Deployment:
+### Deployment:
 - Set up an AWS RDS instance and import the database schema.
 - Launch an AWS EC2 instance and deploy the back-end.
 - Configure the necessary security groups and network settings.
 - Deploy the front-end application to an AWS S3 instance.
 - Update the API endpoint in the front-end configuration to point to the deployed back-end.
+
+### Compilation:
+<img width="1369" alt="j unit test" src="https://github.com/Team1Banking/Project2/assets/107225817/70a78b09-174d-437f-a090-622c068389e3">
+
+### Use/Case:
+<img width="1358" alt="Screenshot 2023-07-17 at 11 01 23 PM" src="https://github.com/Team1Banking/Project2/assets/107225817/9c068c58-9851-45d3-81ad-f62eaa5eb159">
+
+### ER Diagram:
+<img width="1363" alt="Screenshot 2023-07-17 at 11 02 08 PM" src="https://github.com/Team1Banking/Project2/assets/107225817/b8d47e0d-8d8f-4001-9f62-e234b36bed3f">
+
+
+
+
+
 
 
