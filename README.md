@@ -1,29 +1,53 @@
-# Project 2
+# ANT - Associated network of transactions
 
-## Banking System
+<img width="791" alt="Ant logo" src="src/ant-high-resolution-logo-color-on-transparent-background_(4).png">
 
-The back-end system shall utilize the Spring Framework in the following ways:
+- A banking web application that consists of a back-end system built with the Spring Framework and a front-end application developed using React. The back-end system utilizes various components of the Spring Framework, including Spring Boot, Spring Data, Spring Web, and Spring Security with JWT authentication. The front-end communicates with the back-end through Axios requests.
 
-Spring Boot will be used for the creation and setup of the application
+## Overview
 
-Spring Data will be utilized for communication with a database
+- Simulates an online banking system. It allows users to register/login, deposit/withdraw money from accounts, transfer money between accounts and recipients, and view transactions.
 
-Spring Web will be used for Http request handling and creation of controllers
+### - Back-End:
+- Spring Boot: Used for the creation and setup of the application.
+- Spring Data: Utilized for communication with a PostgreSQL database.
+- Spring Web: Used for HTTP request handling and creation of controllers.
+- Spring Security: Implements JWT-based authentication for secure access.
+  
+### - Front-End:
+- React: The front-end is built using React, a popular JavaScript library for building user interfaces.
+- Axios: Used for making HTTP requests from the front-end to the back-end.
+  
+## AWS:
+- RDS: The database is hosted on an AWS RDS instance using the PostgreSQL dialect.
+- EC2: The back-end is deployed on an AWS EC2 instance.
+- S3: The front-end application is deployed using an AWS S3 instance.
 
-Spring Security will utilize JWTs for Authentication
+## Features 
+- Track expenses and income
+- Deposit and withdraw money
+- Transfer money between bank accounts
+- Transfer money to other users
 
-The front-end of the application will be a React Application that will communicate with the backend through Axios Requests
+## Installation
+Clone the repository: git clone <https://github.com/Team1Banking/Project2.git>
 
-AWS shall be utilized in the following ways:
+### - Set up the back-end:
 
-The database will be hosted on an AWS RDS using the PostgreSQL Dialect
+- Install dependencies: cd backend && mvn install
+- Configure the database connection in application.properties.
+- Run the back-end: mvn spring-boot:run
 
-The back end will be running on an AWS EC2 instance
+### - Set up the front-end:
+- Install dependencies: cd frontend && npm install
+- Configure the API endpoint in src/api/config.js.
+- Run the front-end: npm start
 
-The front-end will be deployed using an AWS S3
+### - Deployment:
+- Set up an AWS RDS instance and import the database schema.
+- Launch an AWS EC2 instance and deploy the back-end.
+- Configure the necessary security groups and network settings.
+- Deploy the front-end application to an AWS S3 instance.
+- Update the API endpoint in the front-end configuration to point to the deployed back-end.
 
-A CI/CD Pipeline will be created using AWS CodeBuild, CodeDeploy and CodePipeline to rapidly deploy new changes made to the application
 
-Unit Testing for the back end must cover 70% of the service layer at minimum.
-
-There should be logging throughout the back end to show actions taken on the site and their effects
